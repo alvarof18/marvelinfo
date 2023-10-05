@@ -11,6 +11,7 @@ import com.alvarof18.marvelinfo.ui.characters.CharactersScreen
 import com.alvarof18.marvelinfo.ui.comics.ComicDetailScreen
 import com.alvarof18.marvelinfo.ui.comics.ComicsScreen
 import com.alvarof18.marvelinfo.ui.comics.ComicsViewModel
+import com.alvarof18.marvelinfo.ui.comics.FavoriteComicScreen
 import com.alvarof18.marvelinfo.ui.home.HomeScreen
 
 
@@ -29,6 +30,7 @@ fun MarvelInfoNav(
     ) {
         composable(route = Routes.Home.route) { HomeScreen(navController = navController) }
         composable(route = Routes.Comics.route) { ComicsScreen(navController = navController, comicViewModel = viewModelComic) }
+        composable(route = Routes.FavoriteComics.route){ FavoriteComicScreen(comicViewModel = viewModelComic)}
         composable(route = Routes.Characters.route) { CharactersScreen() }
         composable(route = Routes.ComicsDetails.route) { backStackEntry ->
             ComicDetailScreen(

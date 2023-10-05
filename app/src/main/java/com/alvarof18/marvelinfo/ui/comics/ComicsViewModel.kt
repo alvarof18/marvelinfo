@@ -1,19 +1,16 @@
 package com.alvarof18.marvelinfo.ui.comics
 
-import android.app.Application
-import android.util.Log
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.alvarof18.marvelinfo.domain.model.ComicsModel
 import com.alvarof18.marvelinfo.domain.usecases.ComicsFavoritesUseCase
-
 import com.alvarof18.marvelinfo.domain.usecases.GetComicsUseCase
 import com.alvarof18.marvelinfo.ui.model.ComicUiState
+import com.alvarof18.marvelinfo.ui.model.FavoriteComicModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -24,14 +21,18 @@ class ComicsViewModel: ViewModel() {
 
     private val getComicsUseCase = GetComicsUseCase()
     private val comicsFavoritesUseCase = ComicsFavoritesUseCase()
+
     private var _uiState = MutableStateFlow(ComicUiState())
     val uiState: StateFlow<ComicUiState> = _uiState.asStateFlow()
 
     var comicSelected:ComicsModel = ComicsModel()
     var isFavoriteComic by mutableStateOf(false)
+    var favoriteList:List<FavoriteComicModel> = emptyList()
+
 
     init {
         loadComics()
+        loadFavoriteComics()
     }
 
    private fun loadComics(offset: Int = 0) {
@@ -41,6 +42,12 @@ class ComicsViewModel: ViewModel() {
                currentStatus.copy(listComics = currentStatus.listComics + getComicsUseCase(offset = offset.toString())  )
             }
        _uiState.update { currentStatus -> currentStatus.copy(isLoading = false) }
+        }
+    }
+
+    private fun loadFavoriteComics(){
+        viewModelScope.launch {
+            favoriteList = comicsFavoritesUseCase.getAllFavoriteComics()
         }
     }
 
@@ -69,8 +76,9 @@ class ComicsViewModel: ViewModel() {
                  comicsFavoritesUseCase.insertFavoriteComic(comicSelected)
                  true
              }
-
+             loadFavoriteComics()
         }
 
     }
 }
+
