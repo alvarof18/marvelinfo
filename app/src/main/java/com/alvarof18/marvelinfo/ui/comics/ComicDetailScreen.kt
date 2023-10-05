@@ -16,6 +16,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.sharp.FavoriteBorder
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -65,30 +66,33 @@ fun ComicDetailScreen(
                 )
 
                 //   Gradiant black
-                IconButton(onClick = { /*TODO*/ }, modifier = Modifier.align(Alignment.BottomEnd)) {
+                IconButton(
+                    onClick = { comicViewModel.toggleFavorite() },
+                    modifier = Modifier.align(Alignment.BottomEnd)
+                ) {
                     Icon(
-                        imageVector = Icons.Sharp.FavoriteBorder,
+                        imageVector = if (comicViewModel.isFavoriteComic) Icons.Filled.Favorite else Icons.Sharp.FavoriteBorder,
                         contentDescription = "",
                         tint = Color.Red,
 
                         )
                 }
 
-    /*            Box(
-                    modifier = Modifier
-                        .background(
-                            brush = Brush.linearGradient(
-                                colors = listOf(
-                                    Color.Black.copy(alpha = 0.80f),
-                                    Color.Transparent,
-                                ), start = Offset(0.0f, 0.0f),
-                                end = Offset(200.0f, 250f)
+                /*            Box(
+                                modifier = Modifier
+                                    .background(
+                                        brush = Brush.linearGradient(
+                                            colors = listOf(
+                                                Color.Black.copy(alpha = 0.80f),
+                                                Color.Transparent,
+                                            ), start = Offset(0.0f, 0.0f),
+                                            end = Offset(200.0f, 250f)
+                                        )
+                                    )
+                                    .fillMaxWidth()
+                                    .height(250.dp)
                             )
-                        )
-                        .fillMaxWidth()
-                        .height(250.dp)
-                )
-*/
+            */
             }
 
             Spacer(modifier = Modifier.height(8.dp))

@@ -6,5 +6,5 @@ data class ComicsModel(
     val urlPoster: String = "",
     val creators: List<CreatorsModel> = emptyList(),
     val format: String = "",
-    val pages: Int = 0
+    val pages: Int = 0,
 )

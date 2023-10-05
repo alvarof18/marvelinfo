@@ -8,3 +8,4 @@ class GetComicsUseCase {
     suspend operator fun invoke(offset: String): List<ComicsModel> =
         repository.getComics(offset = offset)
 }
+
