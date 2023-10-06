@@ -34,6 +34,7 @@ import androidx.navigation.compose.rememberNavController
 import com.alvarof18.marvelinfo.config.MarvelInfoNav
 import com.alvarof18.marvelinfo.config.Routes
 import com.alvarof18.marvelinfo.ui.model.MarvelBottomNavItem
+import com.alvarof18.marvelinfo.ui.search.SearchScreen
 
 
 @Composable
@@ -58,6 +59,7 @@ fun MarvelInfoApp(navController: NavHostController = rememberNavController()) {
 
         ) { padding ->
             MarvelInfoNav(navController = navController, modifier = Modifier.padding(padding))
+
         }
     }
 }
@@ -74,7 +76,7 @@ fun MarvelBottomBar(navController: NavHostController) {
         MarvelBottomNavItem.FavoritesNavBar,
     )
 
-    if (currentRoute != Routes.ComicsDetails.route)
+    if (currentRoute != Routes.ComicsDetails.route &&  (currentRoute != Routes.SearchComic.route))
         NavigationBar(containerColor = Color.Black) {
             items.forEachIndexed { _, item ->
                 NavigationBarItem(
@@ -107,6 +109,7 @@ fun TopBar(navController: NavHostController) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 
+    if (currentRoute != Routes.SearchComic.route)
     TopAppBar(
 
         colors = TopAppBarDefaults.topAppBarColors(
@@ -116,7 +119,10 @@ fun TopBar(navController: NavHostController) {
 
         title = {
             currentRoute?.uppercase()?.let {
-                if (currentRoute != Routes.ComicsDetails.route && (currentRoute != Routes.FavoriteComics.route)) {
+                if (currentRoute != Routes.ComicsDetails.route
+                    && (currentRoute != Routes.FavoriteComics.route)
+
+                ) {
                     Text(
                         textAlign = TextAlign.Center,
                         text = it,
@@ -140,7 +146,7 @@ fun TopBar(navController: NavHostController) {
 
         actions = {
             if ((currentRoute != Routes.Home.route) && (currentRoute != Routes.ComicsDetails.route) && (currentRoute != Routes.FavoriteComics.route)) {
-                IconButton(onClick = { /*TODO*/ }) {
+                IconButton(onClick = { navController.navigate(Routes.SearchComic.route) }) {
                     Icon(
                         imageVector = Icons.Default.Search,
                         contentDescription = "",
@@ -151,8 +157,6 @@ fun TopBar(navController: NavHostController) {
 
         },
     )
-
-
 }
 
 @Preview

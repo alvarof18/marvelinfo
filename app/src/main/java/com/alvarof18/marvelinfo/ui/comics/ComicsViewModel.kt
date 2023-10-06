@@ -1,7 +1,6 @@
 package com.alvarof18.marvelinfo.ui.comics
 
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
@@ -57,7 +56,16 @@ class ComicsViewModel: ViewModel() {
     }
 
     fun loadInfoComic(idComic:Int){
-        comicSelected = _uiState.value.listComics.find { it.id.toInt() == idComic }!!
+        viewModelScope.launch {
+        var comicTemp = _uiState.value.listComics.find { it.id.toInt() == idComic }
+        if (comicTemp == null){
+                comicTemp = favoriteList.find { it.comic.id.toInt() == idComic }?.comic
+            }
+              comicSelected = comicTemp!!
+        }
+
+
+        //Sacar esto de esta funcion
         viewModelScope.launch {
             //valido si esta en la lista de favoritos
             isFavoriteComic = comicsFavoritesUseCase.isFavoriteComic(comicSelected.id)

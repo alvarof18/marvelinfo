@@ -1,6 +1,8 @@
 package com.alvarof18.marvelinfo.config
 
 
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -13,6 +15,7 @@ import com.alvarof18.marvelinfo.ui.comics.ComicsScreen
 import com.alvarof18.marvelinfo.ui.comics.ComicsViewModel
 import com.alvarof18.marvelinfo.ui.comics.FavoriteComicScreen
 import com.alvarof18.marvelinfo.ui.home.HomeScreen
+import com.alvarof18.marvelinfo.ui.search.SearchScreen
 
 
 @Composable
@@ -25,13 +28,14 @@ fun MarvelInfoNav(
     NavHost(
         modifier = modifier,
         navController = navController, startDestination = Routes.Home.route,
-       // enterTransition = { EnterTransition.None},
-       // exitTransition = { ExitTransition.None }
+      //  enterTransition = { EnterTransition.None},
+      //  exitTransition = { ExitTransition.None }
     ) {
         composable(route = Routes.Home.route) { HomeScreen(navController = navController) }
         composable(route = Routes.Comics.route) { ComicsScreen(navController = navController, comicViewModel = viewModelComic) }
-        composable(route = Routes.FavoriteComics.route){ FavoriteComicScreen(comicViewModel = viewModelComic)}
+        composable(route = Routes.FavoriteComics.route){ FavoriteComicScreen(comicViewModel = viewModelComic,navController = navController )}
         composable(route = Routes.Characters.route) { CharactersScreen() }
+        composable(route = Routes.SearchComic.route) { SearchScreen() }
         composable(route = Routes.ComicsDetails.route) { backStackEntry ->
             ComicDetailScreen(
                 comicViewModel = viewModelComic,

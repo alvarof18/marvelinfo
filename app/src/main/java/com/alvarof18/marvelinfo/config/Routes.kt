@@ -6,4 +6,5 @@ sealed class Routes(val route:String){
     object Characters:Routes(route = "characters")
     object FavoriteComics:Routes(route = "favoriteComics")
     object ComicsDetails:Routes(route = "comicDetail/{comicId}")
+    object SearchComic:Routes(route = "search")
  }
