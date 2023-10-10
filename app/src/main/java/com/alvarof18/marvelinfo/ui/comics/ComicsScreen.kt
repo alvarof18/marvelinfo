@@ -108,12 +108,6 @@ fun ComicsScreen(
 
 }
 
-//Todo {
-// - Colocar una imagen gif para el loading
-// - Realizar la peticion HTTP para buscar informacion del comic,
-// - Crear viewModelDetalle, navegar desde la principal hacia el detalle
-// }
-
 @Composable
 fun ComicItemCard(comic: ComicsModel, navigateTo: () -> Unit, viewModelComic: ComicsViewModel) {
 

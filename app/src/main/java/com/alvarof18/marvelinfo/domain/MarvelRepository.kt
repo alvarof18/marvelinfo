@@ -4,6 +4,7 @@ import com.alvarof18.marvelinfo.domain.model.ComicsModel
 
 interface MarvelRepository {
     suspend fun getComics(offset:String):List<ComicsModel>
-
+    suspend fun searchComics(query:String):List<ComicsModel>
+    suspend fun getComicById(comicId:Long):ComicsModel
 
 }

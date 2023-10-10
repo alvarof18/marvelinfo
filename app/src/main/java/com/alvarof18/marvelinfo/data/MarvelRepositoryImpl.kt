@@ -12,4 +12,12 @@ class MarvelRepositoryImpl: MarvelRepository {
         return api.getComics(offset = offset)
     }
 
+    override suspend fun searchComics(query: String): List<ComicsModel> {
+        return api.searchComics(query)
+    }
+
+    override suspend fun getComicById(comicId: Long): ComicsModel {
+        return api.getComicById(comicId)
+    }
+
 }

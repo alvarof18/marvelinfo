@@ -7,5 +7,8 @@ class GetComicsUseCase {
     private val repository = MarvelRepositoryImpl()
     suspend operator fun invoke(offset: String): List<ComicsModel> =
         repository.getComics(offset = offset)
+
+    suspend fun getComicById(comicId:Long):ComicsModel = repository.getComicById(comicId)
+
 }
 
