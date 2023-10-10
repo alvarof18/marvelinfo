@@ -5,17 +5,21 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawWithContent
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -25,20 +29,23 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import coil.compose.AsyncImage
 import com.alvarof18.marvelinfo.R
-import com.alvarof18.marvelinfo.ui.model.getAllCategories
 
 
 @Composable
 fun HomeScreen(modifier: Modifier = Modifier, navController: NavHostController) {
     Column(modifier = modifier) {
         HeaderHomeScreen()
-        Categories(navController = navController)
+        Spacer(modifier = Modifier.height(32.dp))
+        FormatComic(navController = navController)
+        Spacer(modifier = Modifier.height(32.dp))
     }
 }
 
@@ -46,7 +53,6 @@ fun HomeScreen(modifier: Modifier = Modifier, navController: NavHostController) 
 fun HeaderHomeScreen(modifier: Modifier = Modifier) {
 
     //fading-edge-effect
-
     Box(modifier = modifier) {
         Image(
             modifier = Modifier
@@ -68,27 +74,66 @@ fun HeaderHomeScreen(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun Categories(navController: NavHostController) {
-    val listCategories = getAllCategories
-    Text(
-        text = "Categories",
-        textAlign = TextAlign.Center,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 16.dp)
-            .alpha(0.7f),
-        fontSize = 24.sp,
-        fontWeight = FontWeight.SemiBold,
-        color = Color.White
-    )
-    listCategories.forEach { category ->
-        CategoriesItems(
-            categoryLabel = category.name,
-            image = category.imageCategory,
-            onclick = { navController.navigate(category.route) })
-        Spacer(modifier = Modifier.height(24.dp))
+fun FormatComic(navController: NavHostController) {
+
+    Column {
+        Row(
+            Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 8.dp)
+        ) {
+            Text(
+                text = "Comics",
+                color = Color.White,
+                fontSize = 20.sp,
+                fontWeight = FontWeight.SemiBold
+            )
+            Spacer(modifier = Modifier.weight(1f))
+            Text(text = "See all", color = Color.Red,
+                modifier = Modifier.clickable {})
+        }
+        Spacer(modifier = Modifier.height(16.dp))
+        LazyRow {
+            repeat(10) {
+                item { itemComic() }
+            }
+        }
     }
 }
+
+
+@Composable
+fun itemComic(modifier: Modifier = Modifier) {
+
+    Column(modifier = Modifier.padding(horizontal = 8.dp)) {
+        Box {
+            AsyncImage(
+                model = "https://i.annihil.us/u/prod/marvel/i/mg/d/d0/5727882d64025.jpg",
+                contentDescription = null,
+                modifier = Modifier
+                    .height(160.dp)
+                    .width(100.dp)
+                    .clip(RoundedCornerShape(8.dp)),
+                contentScale = ContentScale.FillBounds
+            )
+        }
+        Spacer(modifier = Modifier.height(6.dp))
+        Text(
+            text = "Ultimate Fantastic Four (2003) #13",
+            modifier = Modifier.width(100.dp),
+            fontSize = 12.sp,
+            textAlign = TextAlign.Center,
+            fontWeight = FontWeight.Bold,
+            color = Color.White,
+            lineHeight = 12.sp,
+            maxLines = 2,
+            overflow = TextOverflow.Ellipsis
+
+        )
+    }
+
+}
+
 
 @Composable
 fun CategoriesItems(categoryLabel: String, image: Int, onclick: () -> Unit) {
@@ -121,4 +166,10 @@ fun CategoriesItems(categoryLabel: String, image: Int, onclick: () -> Unit) {
 fun PreviewHomeScreen() {
     val navController = rememberNavController()
     HomeScreen(navController = navController)
+}
+
+@Preview(showBackground = true)
+@Composable
+fun PreviewItemComic() {
+    itemComic()
 }
