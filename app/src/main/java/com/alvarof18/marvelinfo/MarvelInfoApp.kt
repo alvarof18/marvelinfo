@@ -28,6 +28,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
@@ -82,7 +83,15 @@ fun MarvelBottomBar(navController: NavHostController) {
                 NavigationBarItem(
 
                     selected = currentRoute == item.route,
-                    onClick = { navController.navigate(item.route) },
+                    onClick = {
+                        navController.navigate(item.route){
+                       // popUpTo(Routes.Home.route)//{
+                          //  saveState = true
+                       // }
+                     //       launchSingleTop = true
+                     //       restoreState = true
+
+                    } },
                     icon = {
                         Image(
                             painter = painterResource(id = item.icon),

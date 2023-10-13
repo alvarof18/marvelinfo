@@ -20,4 +20,11 @@ class MarvelRepositoryImpl: MarvelRepository {
         return api.getComicById(comicId)
     }
 
+    override suspend fun getComicsByCategories(
+        offset: String,
+        category: String
+    ): List<ComicsModel> {
+       return api.getComicsByCategories(category, offset)
+    }
+
 }

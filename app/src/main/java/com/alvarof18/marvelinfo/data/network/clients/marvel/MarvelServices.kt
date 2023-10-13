@@ -31,22 +31,35 @@ class MarvelServices {
             val response = retrofit.create(MarvelClient::class.java).searchComics(query)
             if (response.isSuccessful) {
                 val result = response.body()?.data?.resultado
-                result?.map { comic -> MarvelMapper.marvelResponseToComicEntity(comic) } ?: emptyList()
-            }else {
-            emptyList()
+                result?.map { comic -> MarvelMapper.marvelResponseToComicEntity(comic) }
+                    ?: emptyList()
+            } else {
+                emptyList()
             }
         }
     }
-//Quiero probar sin Context
-    suspend fun getComicById(comicId:Long):ComicsModel{
+
+    //Quiero probar sin Context
+    suspend fun getComicById(comicId: Long): ComicsModel {
         val response = retrofit.create(MarvelClient::class.java).getComicById(comicId)
-        if (response.isSuccessful){
+        if (response.isSuccessful) {
             val result = response.body()?.data?.resultado
-           return  result?.get(0)?.let { MarvelMapper.marvelResponseToComicEntity(it) } ?: ComicsModel()
+            return result?.get(0)?.let { MarvelMapper.marvelResponseToComicEntity(it) }
+                ?: ComicsModel()
         }
-       return  ComicsModel()
+        return ComicsModel()
     }
 
+    suspend fun getComicsByCategories(category: String, offset: String): List<ComicsModel> {
+        return withContext(Dispatchers.IO){
+             val response = retrofit.create(MarvelClient::class.java).getComicByCategories(category, offset)
+             val result = response.body()?.data?.resultado
+            result?.map { comic -> MarvelMapper.marvelResponseToComicEntity(comic) }
+                ?: emptyList()
+        }
+    }
 }
+
+
 
 

@@ -6,5 +6,6 @@ interface MarvelRepository {
     suspend fun getComics(offset:String):List<ComicsModel>
     suspend fun searchComics(query:String):List<ComicsModel>
     suspend fun getComicById(comicId:Long):ComicsModel
+    suspend fun getComicsByCategories(offset:String, category:String):List<ComicsModel>
 
 }

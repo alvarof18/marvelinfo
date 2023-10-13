@@ -8,7 +8,10 @@ class GetComicsUseCase {
     suspend operator fun invoke(offset: String): List<ComicsModel> =
         repository.getComics(offset = offset)
 
-    suspend fun getComicById(comicId:Long):ComicsModel = repository.getComicById(comicId)
+    suspend fun getComicById(comicId: Long): ComicsModel = repository.getComicById(comicId)
+
+    suspend fun getComicByCategories(category: String, offset: String): List<ComicsModel> =
+        repository.getComicsByCategories(category = category, offset = offset)
 
 }
 

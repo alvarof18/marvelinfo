@@ -13,11 +13,7 @@ import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.sharp.FavoriteBorder
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -33,7 +29,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
@@ -45,7 +40,7 @@ import com.alvarof18.marvelinfo.domain.model.ComicsModel
 fun ComicsScreen(
     modifier: Modifier = Modifier,
     comicViewModel: ComicsViewModel,
-    navController: NavHostController
+    navController: NavHostController,
 ) {
 
     val uiComicState by comicViewModel.uiState.collectAsState()
@@ -65,8 +60,6 @@ fun ComicsScreen(
 
         if (uiComicState.listComics.isEmpty()) {
             Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
-              //  Image(painter = painterResource(id = R.drawable.loading), contentDescription = "Loading")
-
              CircularProgressIndicator(color = Color.Red)
             }
 
